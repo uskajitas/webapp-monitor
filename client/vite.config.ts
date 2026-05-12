@@ -9,6 +9,7 @@ export default defineConfig({
     port: 3170,
     strictPort: true,
     host: 'localhost',
+    allowedHosts: ['webapp-monitor.uskiano.com'],
     proxy: {
       '/api': 'http://localhost:8170',
     },
