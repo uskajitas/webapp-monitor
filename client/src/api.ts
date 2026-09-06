@@ -11,6 +11,14 @@ export function setCurrentEmail(email: string | null) {
   currentEmail = email ? email.toLowerCase() : null;
 }
 
+/** Carries the HTTP status so callers can tell "rejected" (403) from "unreachable" (network/server down, status 0). */
+export class ApiError extends Error {
+  constructor(public status: number, message: string) {
+    super(message);
+    this.name = 'ApiError';
+  }
+}
+
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
@@ -18,10 +26,15 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
   };
   if (currentEmail) headers['x-user-email'] = currentEmail;
 
-  const res = await fetch(path, { ...init, headers });
+  let res: Response;
+  try {
+    res = await fetch(path, { ...init, headers });
+  } catch (e: any) {
+    throw new ApiError(0, e?.message || 'network error');
+  }
   if (!res.ok) {
     const text = await res.text().catch(() => '');
-    throw new Error(`${res.status} ${res.statusText}: ${text}`);
+    throw new ApiError(res.status, `${res.status} ${res.statusText}: ${text}`);
   }
   return res.json();
 }

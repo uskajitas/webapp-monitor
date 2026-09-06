@@ -53,13 +53,13 @@ router.post('/users', requireAdmin, async (req, res) => {
 router.put('/users/:email', requireAdmin, async (req, res) => {
   const { role } = req.body || {};
   if (!['admin', 'pro', 'guest'].includes(role)) return res.status(400).json({ error: 'invalid role' });
-  const u = await setRole(req.params.email, role);
+  const u = await setRole(String(req.params.email), role);
   if (!u) return res.status(404).json({ error: 'not found' });
   res.json(u);
 });
 
 router.delete('/users/:email', requireAdmin, async (req, res) => {
-  const ok = await removeUser(req.params.email);
+  const ok = await removeUser(String(req.params.email));
   if (!ok) return res.status(400).json({ error: 'cannot remove (bootstrap admin or not found)' });
   res.json({ ok: true });
 });
