@@ -30,7 +30,7 @@ app.get('/api/health', (_req, res) => {
   res.json({ ok: true, project: 'webappmonitor', ts: new Date().toISOString() });
 });
 
-app.use('/api', accessGate({ publicPaths: [/^/health$/] }));
+app.use('/api', accessGate({ publicPaths: [/^\/health$/] }));
 app.use('/api', usersApi);
 
 // Global error handler — never crash the process on a route error.
