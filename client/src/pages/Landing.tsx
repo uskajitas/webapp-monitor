@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const Hero = styled.section`
+  position: relative;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -43,11 +44,29 @@ const CTA = styled(Link)`
   }
 `;
 
+const Footer = styled.footer`
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 16px;
+  font-size: 0.85rem;
+`;
+
+const FooterLink = styled.a`
+  color: ${({ theme }) => theme.colors.textDim};
+  &:hover {
+    color: ${({ theme }) => theme.colors.text};
+  }
+`;
+
 const Landing: React.FC = () => (
   <Hero>
     <Title>Webappmonitor</Title>
     <Sub>Replace this hero copy with what Webappmonitor actually does.</Sub>
     <CTA to="/login">Sign in</CTA>
+    <Footer>
+      <FooterLink href="https://uskiano.com" target="_blank" rel="noopener">uskiano.com</FooterLink>
+    </Footer>
   </Hero>
 );
 
