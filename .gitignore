@@ -7,3 +7,4 @@ dist
 .vscode
 .idea
 server/.env.bak.*
+server/src/login/

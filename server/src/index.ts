@@ -6,7 +6,7 @@ import express from 'express';
 import cors from 'cors';
 import { initDb } from './db';
 import usersApi from './usersApi';
-import { accessGate } from './accessGate';
+import { accessGate } from './login/accessGate';
 
 const PORT = parseInt(process.env.PORT || '8170', 10);
 
